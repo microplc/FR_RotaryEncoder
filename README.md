@@ -1,8 +1,7 @@
 # FR_RotaryEncoder
-An Arduino libray for Rotary Encoders (types KY-040/EC11 or similar)
+一个Arduino库用于旋转编码器 (型号 KY-040/EC11 或类似)
 
-    "FR_RotaryEncoder" is a library for using mechanical rotary encoders
-    with a built-in push switch.
+    "FR_RotaryEncoder" 是一个用于内嵌PUSH开关的机械旋转编码器的Arduino库.
     
     Copyright (c) 2019 by Ilias Iliopoulos info@fryktoria.com
 
@@ -23,83 +22,74 @@ An Arduino libray for Rotary Encoders (types KY-040/EC11 or similar)
 
   =============================================================================
 
-The code supports:
+代码支持:
 
-   * Operation via interrupts or polling
-   * Debouncing of the rotary encoder rotational movement with a method that 
-      does not utilize debouncing time, based on the work of David Johnson-Davies
-   * Reading of the switch state and identification of Long Press
-   * Setting of rotational sensitivity
+   * 通过中断或循环运行
+   * 内嵌旋转编码器旋转运动消抖方法不需设置消抖时间，基于David Johnson-Davies前期工作
+   * 读取开关状态并识别长按
+   * 设置旋转敏感性
 
   =============================================================================
 
   This code is implemented with the Arduino IDE and has been tested with 
   IDE 1.8.10, on an Arduino Nano.  
 
-  The code has been tested with a KY-040 rotary encoder module, having pull-up 
-  resistors at pins A and B and no pull-up at pin SW, such as:
+  代码在KY-040旋转编码器上面测试通过，pins A 和 B 有上拉电阻，pin SW没有上拉, 可参考:
   https://www.aliexpress.com/item/32648520888.html?spm=a2g0s.9042311.0.0.27424c4dMoxkCX 
  
   =============================================================================
 
-#  Usage:
+#  使用:
 
-0. Include the library in your sketch
+0. 包含库
 
       ```c++
       #include "FR_RotaryEncoder.h"
       ```
 
-1. Create an instance of the class and specify the pins used for A (SCK), B (DT) 
-     and the push-button/switch (SW).
-     It is important to set A to pin 2 or 3 which supports interrupts.
-     Also important is to set SW to pin 2 or 3, whichever actually of the pins 2 and 3 
-     is not connected to A.
-     B can be any other Arduino I/O pin.
-     The name `rencoder` below is arbitrary. You can name your class instance anyway you like.
+1. 创建类实例并指定用于A (SCK), B (DT) 和 PUSH开关 (SW)的针脚。
+     把 A 脚设置为支持中断功能的 PIN 2 或 PIN 3 是非常重要的。
+     另外把 SW 脚设置为 A 脚不用的 PIN 2 或 3也是非常重要的。 
+     B脚可以是任何其他的Arduino I/O 脚。
+     下面的类名 `rencoder` 是随意起的。
 
       ```c++
       RotaryEncoder rencoder(pinSCK, pinDT, pinSW);
       ```
 
-2. Check the wiring of the rotary encoder. By default, the Arduino inputs are
-     configured **without** pull-ups. If the module has pull-up resistors 
-     in pins A and B, you do not have to do anything. But if there are no pull-ups,
-     you have to set the manually using the internal MCU pull-ups:
+2. 检查旋转编码器的线路，默认情况下 , Arduino 输入被设置为 **without** 上拉。
+     如果模块有上拉电阻在 PIN A 和 B，你不需要做任何事。但是如果模块没有上拉电阻，
+     你必须手动设置使用内部 MCU 上拉。
 
       ```c++
       rencoder.enableInternalRotaryPullups(); 
       ```
 
-    If the module does not have a pull-up resistor for the switch, 
-       you have to activate a pull-up resistor inside the Arduino. Use:
+    如果模块 PUSH 开关也没有上拉电阻，你也需要激活内部上拉电阻设置：
 
       ```c++
       rencoder.enableInternalSwitchPullup(); 
       ```
 
-3. With pull-up resistors and a switch connecting to GND, the steady state (switch not pressed)
-     is 1 and the active (switch pressed) is 0. If your hardware has a switch from pin to Vcc 
-     and a pull down resistor,
-     you can invert the logic with:
+3. 有上拉电阻并且开关连接到 GND ，稳定状态 (switch not pressed)是 1 ，
+     激活状态 (switch pressed) 是 0。如果你的硬件有一个下拉电阻从 PIN 到 Vcc 
+     你可以反转逻辑如下：
 
       ```c++
       rencoder.setSwitchLogic(true);
       ```
 
-You may also use `rencoder.setRotaryLogic()` to invert the rotational direction.
+你也可以使用 `rencoder.setRotaryLogic()` 来反转旋转的方向。
 
-4. Set the positive and negative limits of the rotational position, as well
-     as the wrap-around mode, with:
+4. 设置旋转编码器正负极限值和 wrap-around 模式：
 
       ```c++
       rencoder.setRotaryLimits(rotaryMinimum, rotaryMaximum, rotaryWrapMode);
       ```
 
-    The **rotaryWrap** mode seems simple to understand but is a bit tricky.
+    **rotaryWrap** 模式就是循环。
 
-    **false**: Increasing position will never be higher than the maximum value.
-              Decreasing values cannot be lower than the minimum value.
+    **false**: 增加方向永远小于最大值，减少方向永远大于最小值
 
     The tricky part is when this mode is used along with `setRotationalStep()`
               and the step is set to a value different than 1. Suppose you have set the 
