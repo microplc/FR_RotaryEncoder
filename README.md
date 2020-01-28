@@ -59,25 +59,25 @@
       
      常见Arduino板子的中断资源列表：
      
-     板子型号:----------------------------------------int.0---int.1---int.2---int.3---int.4---int.5---Level
+     板子型号-----int.0，int.1，int.2，int.3，int.4，int.5，Level
      
-     Uno, Mini, Pro, ATmega168, ATmega328            PIN2，PIN3，5v
+     Uno, Mini, Pro, ATmega168, ATmega328-----PIN2，PIN3，5v
      
-     Mega2560                                        PIN2，PIN3，PIN21，PIN20，PIN19，PIN18，5v
+     Mega2560-----PIN2，PIN3，PIN21，PIN20，PIN19，PIN18，5v
      
-     Leonardo, Micro, ATmega32U4                     PIN3，PIN2，PIN0，PIN1，PIN7，5v
+     Leonardo, Micro, ATmega32U4-----PIN3，PIN2，PIN0，PIN1，PIN7，5v
      
-     Digistump, Trinket, ATtiny85............. 2/physical pin 7                                    5v
+     Digistump, Trinket, ATtiny85-----2/physical pin 7，5v
      
-     Due, SAM3X8E............................. all digital pins                                    3v
+     Due, SAM3X8E-----all digital pins，3v
      
-     Zero, ATSAMD21G18........................ all digital pins, except pin 4                      3v
+     Zero, ATSAMD21G18-----all digital pins, except pin 4，3v
      
-     Blue Pill, STM32F103xxxx boards.......... all digital pins, maximun 16 pins at the same time  3v
+     Blue Pill, STM32F103xxxx boards-----all digital pins, maximun 16 pins at the same time，3v
      
-     ESP8266.................................. all digital pins, except gpio6 - gpio11 & gpio16    3v/5v
+     ESP8266-----all digital pins, except gpio6 - gpio11 & gpio16，3v/5v
      
-     ESP32.................................... all digital pins                                    3v
+     ESP32-----all digital pins，3v
 
 2. 检查旋转编码器的线路，默认情况下 , Arduino 输入被设置为 **without** 上拉。
      如果模块有上拉电阻在 PIN A 和 B，你不需要做任何事。但是如果模块没有上拉电阻，
