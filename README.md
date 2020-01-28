@@ -100,6 +100,69 @@
     **true**: 当超过最大值时，位置将被设置为最小值，而不管旋转步进值。另一个方向类似。
 
 5. 你可以任意设置运行参数，详见文档 **FR_RotaryEncoder.h**
+    // 设置方向
+    // CW = Clockwise 
+    // CCW = Counter-clockwise 
+    // NOT_MOVED = Not moved since initialization or setPosition()
+	int getDirection();
+
+	// 返回编码器当前方向
+	int getPosition();
+
+	// 设置起始位置
+	void setPosition(int newPosition);
+
+	// 设置编码器最大值
+	void setMaxValue(int newMaxValue);
+
+	// 设置编码器最小值
+	void setMinValue(int newMinValue);
+
+	// 设置循环模式，如果在同一方向超出最大最小值
+    //   true goes from maxValue to minValue
+    //   false stays at maxValue or minValue, if continued in the same direction 
+	void setWrapMode(bool newWrapMode);
+
+    // 设置旋转敏感度
+    // false (default): Requires two clicks per transition
+    // true: Requires one click per transition (except the first after setup 
+    // which depends on the initial switch position) 
+    void setSensitive(bool fast);
+
+    // 设置步进值
+    void setRotationalStep(int step);
+
+    // 更新编码器状态
+    void rotaryUpdate();
+
+    // PUSH开关
+
+    // 使能内部开关上拉电阻
+    void enableInternalSwitchPullup();
+
+    // 设置开关逻辑
+    //  true means:  switch ON if pin is 1, OFF if pin is 0
+    //  false means: switch OFF if pin is 1, ON if pin is 0
+    void setSwitchLogic(bool logic);
+
+    // 设置开关消抖时间，单位ms
+    void setSwitchDebounceDelay(unsigned long dd);
+
+    // 返回开关状态
+    // See enum SwitchState
+    //   SW_OFF OFF
+    //   SW_ON ON
+    //   SW_LONG Long press
+    int getSwitchState(); 
+
+    // 设置长按的时间闸门
+    void setLongPressTime(unsigned long longPress);
+
+    // 开关被按压返回TRUE
+    bool keyPressed();
+
+    // 返回开关被按压的时间，单位ms
+    unsigned long keyPressedTime();
 
 6. 如果你想使用中断，你需要创建自己的中断处理函数，比如：interrupt handling routine(s) or Interrupt Service Routines (ISR)
 
