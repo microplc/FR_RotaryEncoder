@@ -61,11 +61,11 @@
      
      板子型号:----------------------------------------int.0---int.1---int.2---int.3---int.4---int.5---Level
      
-     Uno, Mini, Pro, ATmega168, ATmega328--------------2-------3--------------------------------------5v
+     Uno, Mini, Pro, ATmega168, ATmega328            PIN2，PIN3，5v
      
-     Mega2560------------------------------------------2-------3-------21------20------19------18-----5v
+     Mega2560                                        PIN2，PIN3，PIN21，PIN20，PIN19，PIN18，5v
      
-     Leonardo, Micro, ATmega32U4.............. 3      2      0       1      7     x                5v
+     Leonardo, Micro, ATmega32U4                     PIN3，PIN2，PIN0，PIN1，PIN7，5v
      
      Digistump, Trinket, ATtiny85............. 2/physical pin 7                                    5v
      
