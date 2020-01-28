@@ -79,7 +79,7 @@
       rencoder.setSwitchLogic(true);
       ```
 
-你也可以使用 `rencoder.setRotaryLogic()` 来反转旋转的方向。
+      你也可以使用 `rencoder.setRotaryLogic()` 来反转旋转的方向。
 
 4. 设置旋转编码器正负极限值和 wrap-around 模式：
 
@@ -91,22 +91,17 @@
 
     **false**: 增加方向永远小于最大值，减少方向永远大于最小值
 
-    The tricky part is when this mode is used along with `setRotationalStep()`
-              and the step is set to a value different than 1. Suppose you have set the 
-              limits to max=10 and min=-9 and the step to 2. In the counter-clockwise direction,
-              the position may receive values 0, -2, -4, -6, -8 but the next step 
-              would be -10 which is lower than min. If it was allowed to take the value -9,
-              the clockwise direction would subsequently take values -7, -5, -3, -1, 1 etc. which
-              is probably not desirable. Therefore, the lowest position will be -8,
-              regardless of the fact that the min is even lower.
+    需要关注的是这种模式后跟 `setRotationalStep()`并且步进值不为 1. 假设你在
+    逆时针方向设置 max=10 并且 min=-9 步进值为 2，位置值应该是 0, -2, -4, -6
+    , -8 但下一个步进值应该是比 min小的 -10。 如果被允许取值 -9，顺时针方向随
+    后被取值为 -7, -5, -3, -1, 1 等。 这好像不是很令人满意。最小值应该是 -8，
+    无需理会小于最小值的事实。
 
-    **true**: After increasing over the maximum value, the position will be set to the minimum 
-             value, regardless of the setting of the rotational step. Similarly for the other
-             direction.
+    **true**: 当超过最大值时，位置将被设置为最小值，而不管旋转步进值。另一个方向类似。
 
-5. You can set any of the operating parameters using the methods documented in **FR_RotaryEncoder.h**
+5. 你可以任意运行参数，详见文档 **FR_RotaryEncoder.h**
 
-6. If you wish to use interrupts, you must create your interrupt handling routine(s) or Interrupt Service Routines (ISR), such as:
+6. ，如果你想使用中断，你需要创建自己的中断处理函数，比如：interrupt handling routine(s) or Interrupt Service Routines (ISR)
 
       ```c++
       // Interrupt handling routine for the rotary
@@ -119,8 +114,7 @@
       }
       ```
 
-     In `setup()` you must associate each interrupt pin with the 
-        relevant interrupt handling routine, such as:
+     在 `setup()` 中你必须与中断引脚建立关联，例如：
 
 
       ```c++
@@ -129,35 +123,29 @@
       ```
 
 
-     If you do not want to use interrupts, but use the polling method instead, please note
-        that you are not limited to use pins 2 and 3. Any other Arduino I/O pin will do.
+     如果你不想使用中断而使用轮询，你可以使用任何 Arduino I/O 引脚而非必须使用 PIN 2 或 3。
 
-     In such a case, you must place in the `loop()` the routines that handle the encoder. 
-        If you only use the rotary part and not the switch, you can use:
+     这种情况下你必须把处理编码器的语句置入 `loop()` ，如：
 
       ```c++
       rencoder.rotaryUpdate();
       ```
 
-     If you only use the switch, use:
+     如果你仅仅使用PUSH开关，可以：
 
       ```c++
       rencoder.switchUpdate();
       ```
 
-     If you use both, you can do  both jobs at the same time by simply using:
+     如果你两个都用，可以：
 
       ```c++
       rencoder.update();
       ```
 
-7. If you wish to use the **Long Press** functionality, in order to identify if the 
-       switch has been pressed continouously, or to retrieve the time that the switch 
-       remains pressed with `rencoder.keyPressedTime()`, you need to place `rencoder.switchUpdate()`
-       or `rencoder.update()` in the loop, **even if your code uses interrupts**. It
-       becomes questionable, of course, why you should continue to use such a 
-       mixed interrupt/polling solution, but every design is different and, in any case,
-       the library supports it. 
+7. 如果你希望使用长按 **Long Press** 功能，为了识别开关是否被连续按压，或者想通过
+       函数`rencoder.keyPressedTime()` 返回保持按压的时间，即便是你使用中断模式，
+       也要在 Loop 循环里置入`rencoder.switchUpdate()` 或 `rencoder.update()`。 
 
 The library is accompanied with lots of examples which demonstrate most of the library
   features.   
