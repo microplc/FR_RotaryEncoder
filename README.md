@@ -100,6 +100,7 @@
     **true**: 当超过最大值时，位置将被设置为最小值，而不管旋转步进值。另一个方向类似。
 
 5. 你可以任意设置运行参数，详见文档 **FR_RotaryEncoder.h**
+
     // 设置方向
     // CW = Clockwise 
     // CCW = Counter-clockwise 
