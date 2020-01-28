@@ -99,9 +99,9 @@
 
     **true**: 当超过最大值时，位置将被设置为最小值，而不管旋转步进值。另一个方向类似。
 
-5. 你可以任意运行参数，详见文档 **FR_RotaryEncoder.h**
+5. 你可以任意设置运行参数，详见文档 **FR_RotaryEncoder.h**
 
-6. ，如果你想使用中断，你需要创建自己的中断处理函数，比如：interrupt handling routine(s) or Interrupt Service Routines (ISR)
+6. 如果你想使用中断，你需要创建自己的中断处理函数，比如：interrupt handling routine(s) or Interrupt Service Routines (ISR)
 
       ```c++
       // Interrupt handling routine for the rotary
